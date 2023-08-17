@@ -27,7 +27,7 @@ public class Account implements Serializable {
     private String acctNum;
 
     @Column(name = "BALANCE")
-    private int balance;
+    private Long balance;
 
     @Column(name = "ACCT_STAT")
     private String acctStat;

@@ -14,10 +14,10 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("update Account set balance = balance+?2 where acctId=?1")
-    public void saveAmountByAcctID(long acctID, int balance);
+    void saveAmountByAcctID(long acctID, int balance);
 
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("update Account set balance = balance-?2 where acctId=?1")
-    public void withdrawAmountByAcctID(long acctID, int balance);
+    void withdrawAmountByAcctID(long acctID, int balance);
 }
