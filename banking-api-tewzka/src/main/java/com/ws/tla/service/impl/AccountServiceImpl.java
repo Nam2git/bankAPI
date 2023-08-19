@@ -44,7 +44,7 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public Account getAccountById(Long acctId) throws NoDataException {
         log.info("Getting AccountInfo for AccountId{}", acctId);
-        Optional<Account> account = Optional.of(new Account());
+        Optional<Account> account;
         if (acctId != null) {
             account = accountRepository.findById(acctId);
 
@@ -58,7 +58,7 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public void saveAccount(Long customerPrflId, @Valid Account account) throws NoDataException {
-        inputValidatorUtil.checkNotNull(account);
+        inputValidatorUtil.nullCheck(account);
         CustomerProfile customerPrfl = customerProfileService.getCustomerPrflInfoById(customerPrflId);
         account.setCustomerProfile(customerPrfl);
         Card card = account.getCard();
@@ -70,7 +70,7 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public void deposit(Long acctID, int amt) {
         try {
-            accountRepository.saveAmountByAcctID(acctID, amt);
+            accountRepository.updateAccountByAcctID(acctID, amt);
         } catch (Exception ex) {
             log.error("Unable to update", ex);
         }
@@ -90,15 +90,15 @@ public class AccountServiceImpl implements IAccountService {
     public void transfer(Long sourceAcctId, Long destAcctId, int amount, int srcAcctTotalBalance, int destAcctTotalBalance) throws BankServiceApiException {
         if (amount <= srcAcctTotalBalance) {
             accountRepository.withdrawAmountByAcctID(sourceAcctId, amount);
-            accountRepository.saveAmountByAcctID(destAcctId, amount);
+            accountRepository.updateAccountByAcctID(destAcctId, amount);
         } else {
-            log.error("Not enough funds to withdraw amount {}", amount);
+            log.error("Not enough funds to make a transfer {}", amount);
             throw new BankServiceApiException("Not enough funds available in Account to make a transfer");
         }
     }
 
     @Override
-    public void delete(Long acctIdToDelete) throws BankServiceApiException {
+    public void delete(Long acctIdToDelete) {
         accountRepository.deleteById(acctIdToDelete);
     }
 }

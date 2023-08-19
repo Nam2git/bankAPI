@@ -35,12 +35,14 @@ public class AccountController {
     @Autowired
     private InputValidatorUtil inputValidatorUtil;
 
+    @Autowired
+    private BankServiceApiHelper bankServiceApiHelper;
+
     @ApiOperation(value = "Get All Accounts Details")
     @GetMapping(value = "/accountslist")
     public ResponseEntity<List<Account>> getAllAccounts() {
         return ResponseEntity.ok().body(accountService.getAccountsInfoList());
     }
-
 
     @ApiOperation(value = "Get Account Details by AcctId")
     @GetMapping(value = "/{acctID}")
@@ -60,8 +62,8 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Invalid or Bad Request", response = ErrorResponse.class),
             @ApiResponse(code = 408, message = "Request timed out", response = ErrorResponse.class)})
     public ResponseEntity<StatusResponse> createAccount(@RequestBody @Valid AccountDto accountDto) throws NoDataException {
-        inputValidatorUtil.checkNotNull(accountDto);
-        accountService.saveAccount(accountDto.getCustomerPrflId(), BankServiceApiHelper.accountBuilder(accountDto));
+        inputValidatorUtil.nullCheck(accountDto);
+        accountService.saveAccount(accountDto.getCustomerPrflId(), bankServiceApiHelper.accountBuilder(accountDto));
         return new ResponseEntity<>(new StatusResponse("Account Created Successfully"), HttpStatus.OK);
     }
 
@@ -72,7 +74,7 @@ public class AccountController {
         if (Objects.isNull(account)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok().body(BankServiceApiHelper.accountBalanceBuilder(account));
+        return ResponseEntity.ok().body(bankServiceApiHelper.accountBalanceBuilder(account));
     }
 
     @ApiOperation(value = "Deposit amount to an account")
@@ -147,5 +149,4 @@ public class AccountController {
         accountService.delete(acctIdToDelete);
         return new ResponseEntity<>(new StatusResponse("Account " + acctId + " is deleted "), HttpStatus.OK);
     }
-
 }

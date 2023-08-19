@@ -7,14 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("update Account set balance = balance+?2 where acctId=?1")
-    void saveAmountByAcctID(long acctID, int balance);
+    void updateAccountByAcctID(long acctID, int balance);
 
     @Transactional
     @Modifying(clearAutomatically = true)

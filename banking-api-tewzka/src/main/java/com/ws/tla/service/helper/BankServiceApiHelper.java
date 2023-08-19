@@ -16,7 +16,7 @@ import java.util.Random;
 
 @Component
 public class BankServiceApiHelper {
-    public static Account accountBuilder(AccountDto accountDto) {
+    public Account accountBuilder(AccountDto accountDto) {
         Account account = new Account();
         Card card = new Card();
         card.setCardNumber(accountDto.getCard().getCardNumber());
@@ -26,18 +26,18 @@ public class BankServiceApiHelper {
         account.setCard(card);
         account.setAcctNum(String.valueOf(new Random().nextInt(100000000)));
         account.setAcctStat(BankApiConstants.ACTIVE_ACCT);
-        account.setBalance((long) accountDto.getCurrentBalance().intValue());
+        account.setBalance(accountDto.getCurrentBalance().intValue());
         return account;
     }
 
-    public static BalanceDto accountBalanceBuilder(Account account) {
+    public BalanceDto accountBalanceBuilder(Account account) {
         BalanceDto balanceDto = new BalanceDto();
         balanceDto.setCurrentBalance(BigDecimal.valueOf(account.getBalance()));
         balanceDto.setAccountId(account.getAcctId());
         return balanceDto;
     }
 
-    public static CustomerProfile customerPrflBuilder(CustomerDto customerDto) {
+    public CustomerProfile customerPrflBuilder(CustomerDto customerDto) {
         CustomerProfile customerProfile = new CustomerProfile();
         List<Account> accountList = new ArrayList<>();
         customerDto.getCustPrflAcctDtos().forEach(acct -> {
@@ -50,13 +50,13 @@ public class BankServiceApiHelper {
             account.setCard(card);
             account.setAcctNum(String.valueOf(new Random().nextInt(100000000)));
             account.setAcctStat(BankApiConstants.ACTIVE_ACCT);
-            account.setBalance((long) acct.getCurrentBalance().intValue());
+            account.setBalance(acct.getCurrentBalance().intValue());
             accountList.add(account);
         });
         customerProfile.setFirstname(customerDto.getFirstName());
         customerProfile.setLastname(customerDto.getLastName());
         customerProfile.setCity(customerDto.getCity());
-        customerProfile.setPhone(String.valueOf(Long.valueOf(customerDto.getPhoneNumber())));
+        customerProfile.setPhone(customerDto.getPhoneNumber());
         customerProfile.setAccounts(accountList);
         return customerProfile;
     }

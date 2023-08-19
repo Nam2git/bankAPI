@@ -16,5 +16,5 @@ public class CustomerDto {
     private String lastName;
     private String city;
     private String phoneNumber;
-    private List<custPrflAcctDto> custPrflAcctDtos;
+    private List<CustPrflAcctDto> custPrflAcctDtos;
 }

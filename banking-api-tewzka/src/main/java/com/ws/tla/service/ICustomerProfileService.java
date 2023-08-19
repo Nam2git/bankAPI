@@ -10,11 +10,11 @@ import java.util.List;
 public interface ICustomerProfileService {
     CustomerProfile getCustomerPrflInfoById(Long accId) throws NoDataException;
 
-    List<Object[]> getCustomerPrflAndAcctById(Long id) throws NoDataException;
+    Object[] getCustomerPrflAndAcctById(Long id) throws NoDataException;
 
-    List<Object[]> getCustomersPrflList();
+    List<CustomerProfile> getCustomersPrflList();
 
     void saveCustomerPrfl(@Valid CustomerProfile customerProfile) throws NoDataException;
 
-    void delete(Long custId) throws BankServiceApiException;
+    void deleteCustPrfl(Long custId) throws BankServiceApiException;
 }

@@ -1,8 +1,6 @@
 package com.ws.tla.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -27,7 +25,7 @@ public class Account implements Serializable {
     private String acctNum;
 
     @Column(name = "BALANCE")
-    private Long balance;
+    private Integer balance;
 
     @Column(name = "ACCT_STAT")
     private String acctStat;

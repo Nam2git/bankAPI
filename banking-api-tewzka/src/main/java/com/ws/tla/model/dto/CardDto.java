@@ -14,5 +14,5 @@ public class CardDto {
     private CardType cardType;
     private String cardNumber;
     private Long cvvNumber;
-    private Long availableCardLimit;
+    private Integer availableCardLimit;
 }

@@ -15,10 +15,10 @@ public interface CustomerProfileRepository extends JpaRepository<CustomerProfile
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("Select custPrfl, accts from CustomerProfile custPrfl inner join Account accts on custPrfl.custProfileId = accts.customerProfile.custProfileId")
-    List<Object[]> findAllCustsPrflsAcctsAndCardInfo();
+    Object[] findAllCustsPrflsAcctsAndCardInfo();
 
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("Select custPrfl, accts from CustomerProfile custPrfl inner join Account accts on custPrfl.custProfileId = accts.customerProfile.custProfileId where custPrfl.custProfileId=?1")
-    List<Object[]> findCustPrflAcctAndCardInfo(Long custPrflId);
+    Object[] findCustPrflAcctAndCardInfo(Long custPrflId);
 }

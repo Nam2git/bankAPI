@@ -12,7 +12,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class InputValidatorUtil {
 
-    public void checkNotNull(Object obj) throws NoDataException {
+    public void nullCheck(Object obj) throws NoDataException {
         if (Objects.isNull(obj)) {
             log.error("No data found");
             throw new NoDataException("No new account info to create");

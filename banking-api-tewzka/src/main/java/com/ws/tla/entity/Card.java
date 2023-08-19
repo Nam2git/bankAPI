@@ -38,7 +38,7 @@ public class Card implements Serializable {
     private Long cvvNumber;
 
     @Column(name = "TOTAL_LIMIT")
-    private Long totalLimit;
+    private Integer totalLimit;
 
     @Column(name = "CREATED_DATE")
     @CreationTimestamp

@@ -1,7 +1,6 @@
 package com.ws.tla.service.impl;
 
 import com.ws.tla.entity.CustomerProfile;
-import com.ws.tla.exception.BankServiceApiException;
 import com.ws.tla.exception.NoDataException;
 import com.ws.tla.repository.CustomerProfileRepository;
 import com.ws.tla.service.ICustomerProfileService;
@@ -39,24 +38,24 @@ public class CustomerProfileServiceImpl implements ICustomerProfileService {
     }
 
     @Override
-    public List<Object[]> getCustomerPrflAndAcctById(Long custPrflId) throws NoDataException {
+    public Object[] getCustomerPrflAndAcctById(Long custPrflId) {
         log.info("Getting CustomerPrflInfo And AcctInfo for CustPrflId{}", custPrflId);
         return customerProfileRepository.findCustPrflAcctAndCardInfo(custPrflId);
     }
 
     @Override
-    public List<Object[]> getCustomersPrflList() {
-        return customerProfileRepository.findAllCustsPrflsAcctsAndCardInfo();
+    public List<CustomerProfile> getCustomersPrflList() {
+        return customerProfileRepository.findAll();
     }
 
     @Override
     public void saveCustomerPrfl(@Valid CustomerProfile customerProfile) throws NoDataException {
-        inputValidatorUtil.checkNotNull(customerProfile);
+        inputValidatorUtil.nullCheck(customerProfile);
         customerProfileRepository.save(customerProfile);
     }
 
     @Override
-    public void delete(Long custId) throws BankServiceApiException {
+    public void deleteCustPrfl(Long custId) {
         customerProfileRepository.deleteById(custId);
     }
 

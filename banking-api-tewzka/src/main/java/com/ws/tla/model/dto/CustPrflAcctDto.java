@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Setter
-public class custPrflAcctDto {
+public class CustPrflAcctDto {
 
     private BigDecimal currentBalance;
     private CardDto card;
